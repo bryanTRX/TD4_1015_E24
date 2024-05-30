@@ -65,8 +65,15 @@ public:
         }
     }
 
+    void changerCouleur(const string& couleur) override
+    {
+        couleur_ = couleur;
+        cout << couleur_;
+    }
+
 private: 
     string ennemi_; 
+    string couleur_ = "\033[0m";
     vector<string> allies_;
 };
 
@@ -83,14 +90,22 @@ public:
         os << "Objectif : " << objectif_ << endl;
     }
 
+    void changerCouleur(const string& couleur) override
+    {
+        couleur_ = couleur;
+        cout << couleur_;
+    }
+
 private: 
     string objectif_;
+    string couleur_ = "\033[0m";
 };
 
 class VilainHeros : public Vilain, public Heros
 {
 public:
-    VilainHeros(const Vilain& vilain, const Heros& heros, const string& mission) : Personnage(vilain.getNom() + " - " + heros.getNom(), vilain.getJeu() + " - " + heros.getJeu()), Vilain(vilain), Heros(heros), mission_(mission) {}
+    VilainHeros(const Vilain& vilain, const Heros& heros) : Personnage(vilain.getNom() + " - " + heros.getNom(), vilain.getJeu() + " - " + heros.getJeu()), Vilain(vilain), Heros(heros), mission_(vilain.getObjectif() + " dans le monde de " + heros.getJeu()) {}
+    
     const string& getMission() const { return mission_; }
 
     void afficher(ostream& os) const override
@@ -102,10 +117,17 @@ public:
         {
             os << "\t" << i << endl;
         }
-        os << "Mission spéciale : " << Vilain::getObjectif() << " dans le monde de " << Heros::getJeu() << endl;
+        os << "Mission spéciale : " << mission_ << endl;
     }
 
+    void changerCouleur(const string& couleur) override
+    {
+        couleur_ = couleur;
+        cout << couleur_;
+    }
+    
 private:
     string mission_;
+    string couleur_ = "\033[0m";
 };
 // Donc ici je dois simpleement dire que objectif = mission 

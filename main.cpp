@@ -90,53 +90,52 @@ int main()
     const string traitHeros= "\n\033[93m══════════════════════════════════ Affichage des Héros ═══════════════════════════════════════ ";
     cout << traitHeros << endl;
 
-    cout << "\033[94m";  
-    for (const auto& heros : vecteurHeros) 
+    for (auto& heros : vecteurHeros) 
     {
+        heros.changerCouleur("\033[94m");
         heros.afficher(cout);
-        cout << trait << "\033[94m" << endl;
+        cout << trait << endl;
     }
 
     // ---------------------------------------------------------------- Vilain ----------------------------------------------------------------
 
     const string traitVilain = "\n\033[93m══════════════════════════════════ Affichage des Vilains ═══════════════════════════════════════ ";
-    cout << traitVilain << endl; 
+    cout << traitVilain << endl;
 
-    const string traitRouge = "\n\033[91m═════════════════════════════════════════════════════════════════════════ ";
-
-    cout << "\033[91m";  
-    for (const auto& vilain : vecteurVilain) {
+    for (auto& vilain : vecteurVilain)
+    {
+        vilain.changerCouleur("\033[91m"); 
         vilain.afficher(cout);
-        cout << trait << "\033[91m" << endl;
+        cout << trait << endl;
     }
 
     // ---------------------------------------------------------------- Personnages ----------------------------------------------------------------
-    
+
     const string traitPersonnage = "\n\033[93m══════════════════════════════════ Affichage des Personnages ═══════════════════════════════════════ ";
     cout << traitPersonnage << endl;
 
     vector<shared_ptr<Personnage>> vecteurPersonnages;
 
-    for (const auto& heros : vecteurHeros) 
+    for (const auto& heros : vecteurHeros)
     {
         vecteurPersonnages.push_back(make_shared<Heros>(heros));
     }
 
-    for (const auto& vilain : vecteurVilain) 
+    for (const auto& vilain : vecteurVilain)
     {
         vecteurPersonnages.push_back(make_shared<Vilain>(vilain));
     }
 
-    for (const auto& personnage : vecteurPersonnages) 
+    for (auto& personnage : vecteurPersonnages) 
     {
-        if (dynamic_cast<Heros*>(personnage.get()))
+        if (dynamic_cast<Heros*>(personnage.get())) 
         {
-            cout << "\033[94m";  
+            personnage->changerCouleur("\033[94m"); 
         }
 
         else if (dynamic_cast<Vilain*>(personnage.get()))
         {
-            cout << "\033[91m"; 
+            personnage->changerCouleur("\033[91m"); 
         }
         personnage->afficher(cout);
         cout << trait << endl;
@@ -147,13 +146,13 @@ int main()
     const string traitVilainHero = "\n\033[93m══════════════════════════════════ Affichage du Vilian/Hero ═══════════════════════════════════════ ";
     cout << traitVilainHero << endl;
 
-    if (!vecteurVilain.empty() && !vecteurHeros.empty()) 
+    if (!vecteurVilain.empty() && !vecteurHeros.empty())
     {
         Vilain vilain = vecteurVilain[2];
         Heros heros = vecteurHeros[0];
 
-        VilainHeros vilainHeros(vilain, heros, vilain.getObjectif() + heros.getJeu());
-        cout << "\033[95m";  
+        VilainHeros vilainHeros(vilain, heros);
+        vilainHeros.changerCouleur("\033[95m"); 
         vilainHeros.afficher(cout);
         vecteurPersonnages.push_back(make_shared<VilainHeros>(vilainHeros));
     }
@@ -163,29 +162,27 @@ int main()
     const string traitFinal = "\n\033[93m══════════════════════════════════ Affichage du vecteur Personnage après l'ajout du Vilain/Hero ═══════════════════════════════════════ ";
     cout << traitFinal << endl;
 
-
-    for (const auto& personnage : vecteurPersonnages) 
+    for (auto& personnage : vecteurPersonnages) 
     {
         if (dynamic_cast<Heros*>(personnage.get())) 
         {
-            cout << "\033[94m";  
+            personnage->changerCouleur("\033[94m"); 
         }
 
         else if (dynamic_cast<Vilain*>(personnage.get())) 
         {
-            cout << "\033[91m";  
+            personnage->changerCouleur("\033[91m"); 
         }
 
         else if (dynamic_cast<VilainHeros*>(personnage.get())) 
         {
-            cout << "\033[95m";  
+            personnage->changerCouleur("\033[95m"); 
         }
         personnage->afficher(cout);
-        
         cout << trait << endl;
     }
 
-    cout << "\033[0m";
+    cout << "\33[0m";
 
     return 0;
 }
