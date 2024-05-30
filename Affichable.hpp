@@ -6,6 +6,7 @@
 
 using namespace std;
 
+
 class Affichable 
 {
 public:
@@ -52,11 +53,12 @@ public:
 
     const string& getEnnemi() const { return ennemi_; }
     const vector<string>& getAllies() const { return allies_; }
+    size_t getNombreAllies() const { return allies_.size(); }
 
     void afficher(ostream& os) const override
     {
         Personnage::afficher(os);
-        os << "Ennemi : " << ennemi_ << "\nAlliés : " << endl;
+        os << "Ennemi : " << ennemi_ << "\nNombre d'alliés: " << getNombreAllies() << "\nAlliés : " << endl;
         for (const auto& i : allies_)
         {
             os << "\t" << i << endl;
@@ -81,14 +83,6 @@ public:
         os << "Objectif : " << objectif_ << endl;
     }
 
-    //friend istream& operator>>(istream& is, Vilain& vilain)
-    //{
-    //    string nom, jeu, objectif;
-    //    is >> nom >> jeu >> objectif;
-    //    vilain = Vilain(nom, jeu, objectif);
-    //    return is;
-    //}
-
 private: 
     string objectif_;
 };
@@ -96,22 +90,22 @@ private:
 class VilainHeros : public Vilain, public Heros
 {
 public:
-    VilainHeros(const Vilain& vilain, const Heros& heros, const string& mission) : Personnage(vilain.getNom() + "-" + heros.getNom(),vilain.getJeu() + "-" + heros.getJeu()), Heros(heros), Vilain(vilain), mission_(mission) {}
-
+    VilainHeros(const Vilain& vilain, const Heros& heros, const string& mission) : Personnage(vilain.getNom() + " - " + heros.getNom(), vilain.getJeu() + " - " + heros.getJeu()), Vilain(vilain), Heros(heros), mission_(mission) {}
     const string& getMission() const { return mission_; }
 
-    void afficher(ostream& os) const override 
+    void afficher(ostream& os) const override
     {
         Personnage::afficher(os);
         os << "Objectif : " << Vilain::getObjectif() << endl;
         os << "Ennemi : " << Heros::getEnnemi() << "\nAlliés :" << endl;
-        for (const auto& allie : Heros::getAllies()) 
+        for (const auto& i : Heros::getAllies())
         {
-            os << " " << allie << endl;
+            os << "\t" << i << endl;
         }
-        os << "Mission spéciale : " << mission_ << endl;
+        os << "Mission spéciale : " << Vilain::getObjectif() << " dans le monde de " << Heros::getJeu() << endl;
     }
 
 private:
     string mission_;
 };
+// Donc ici je dois simpleement dire que objectif = mission 

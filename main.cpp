@@ -38,45 +38,47 @@ int main()
     testsPourCouvertureLectureBinaire();
 
     const string trait = "\n\033[0m═════════════════════════════════════════════════════════════════════════";
-    vector<Heros> vecteurHeros;
-    vector<Vilain> vecteurVilain;
-    vector<shared_ptr<Personnage>> vecteurPersonnages;
 
-    // Lecture des fichiers binaires
+   
+
+    vector<Heros> vecteurHeros;
     ifstream fichierHeros = ouvrirFichierBinaire("heros.bin");
-    if (!fichierHeros) {
+    if (!fichierHeros) 
+    {
         cerr << "Erreur lors de l'ouverture du fichier heros.bin" << endl;
         return 1;
     }
 
-    ifstream fichierVilain = ouvrirFichierBinaire("vilains.bin");
-    if (!fichierVilain) {
-        cerr << "Erreur lors de l'ouverture du fichier Vilain.bin" << endl;
-        return 1;
-    }
-
-    // Lecture des héros
     size_t nombreHeros = lireUintTailleVariable(fichierHeros);
-    for (size_t i = 0; i < nombreHeros; ++i) {
-        string nom = lireString(fichierHeros);
-        string jeu = lireString(fichierHeros);
+    for (size_t i = 0; i < nombreHeros; ++i)
+    {
+        string nom    = lireString(fichierHeros);
+        string jeu    = lireString(fichierHeros);
         string ennemi = lireString(fichierHeros);
         Heros heros(nom, jeu, ennemi);
 
         size_t nombreAllies = lireUintTailleVariable(fichierHeros);
-        for (size_t j = 0; j < nombreAllies; ++j) {
+        for (size_t j = 0; j < nombreAllies; ++j)
+        {
             heros.ajouterAllier(lireString(fichierHeros));
         }
 
         vecteurHeros.push_back(heros);
     }
 
-    // Lecture des Vilain
+    vector<Vilain> vecteurVilain;
+    ifstream fichierVilain = ouvrirFichierBinaire("vilains.bin");
+    if (!fichierVilain) 
+    {
+        cerr << "Erreur lors de l'ouverture du fichier Vilain.bin" << endl;
+        return 1;
+    }
+
     size_t nombreVilain = lireUintTailleVariable(fichierVilain);
     for (size_t i = 0; i < nombreVilain; ++i) 
     {
-        string nom = lireString(fichierVilain);
-        string jeu = lireString(fichierVilain);
+        string nom      = lireString(fichierVilain);
+        string jeu      = lireString(fichierVilain);
         string objectif = lireString(fichierVilain);
         Vilain vilain(nom, jeu, objectif);
 
@@ -108,54 +110,81 @@ int main()
         cout << trait << "\033[91m" << endl;
     }
 
-    //// Remplir le vecteur de personnages
-    //for (const auto& heros : vecteurHeros) {
-    //    vecteurPersonnages.push_back(make_shared<Heros>(heros));
-    //}
-    //for (const auto& vilain : vecteurVilain) {
-    //    vecteurPersonnages.push_back(make_shared<Vilain>(vilain));
-    //}
+    // ---------------------------------------------------------------- Personnages ----------------------------------------------------------------
+    
+    const string traitPersonnage = "\n\033[93m══════════════════════════════════ Affichage des Personnages ═══════════════════════════════════════ ";
+    cout << traitPersonnage << endl;
 
-    //// Affichage des personnages
-    //for (const auto& personnage : vecteurPersonnages) {
-    //    if (dynamic_cast<Heros*>(personnage.get())) {
-    //        cout << "\033[94m";  // Bleu
-    //    }
-    //    else if (dynamic_cast<Vilain*>(personnage.get())) {
-    //        cout << "\033[91m";  // Rouge
-    //    }
-    //    personnage->afficher(cout);
-    //    cout << "-----------------------" << endl;
-    //}
+    vector<shared_ptr<Personnage>> vecteurPersonnages;
 
-    //// Création d'un VilainHeros
-    //if (!vecteurVilain.empty() && !vecteurHeros.empty()) {
-    //    Vilain vilain = vecteurVilain[0];
-    //    Heros heros = vecteurHeros[0];
-    //    if (vilain.getNom() != heros.getEnnemi()) {
-    //        VilainHeros vilainHeros(vilain, heros, "Détruire tout ce qui existe dans le monde de " + heros.getJeu());
-    //        cout << "\033[95m";  // Mauve
-    //        vilainHeros.afficher(cout);
-    //        vecteurPersonnages.push_back(make_shared<VilainHeros>(vilainHeros));
-    //    }
-    //}
+    for (const auto& heros : vecteurHeros) 
+    {
+        vecteurPersonnages.push_back(make_shared<Heros>(heros));
+    }
 
-    //// Affichage des personnages après ajout de VilainHeros
-    //for (const auto& personnage : vecteurPersonnages) {
-    //    if (dynamic_cast<Heros*>(personnage.get())) {
-    //        cout << "\033[94m";  // Bleu
-    //    }
-    //    else if (dynamic_cast<Vilain*>(personnage.get())) {
-    //        cout << "\033[91m";  // Rouge
-    //    }
-    //    else if (dynamic_cast<VilainHeros*>(personnage.get())) {
-    //        cout << "\033[95m";  // Mauve
-    //    }
-    //    personnage->afficher(cout);
-    //    cout << "-----------------------" << endl;
-    //}
+    for (const auto& vilain : vecteurVilain) 
+    {
+        vecteurPersonnages.push_back(make_shared<Vilain>(vilain));
+    }
 
-    // Réinitialiser la couleur
+    for (const auto& personnage : vecteurPersonnages) 
+    {
+        if (dynamic_cast<Heros*>(personnage.get()))
+        {
+            cout << "\033[94m";  
+        }
+
+        else if (dynamic_cast<Vilain*>(personnage.get()))
+        {
+            cout << "\033[91m"; 
+        }
+        personnage->afficher(cout);
+        cout << trait << endl;
+    }
+
+    // ---------------------------------------------------------------- Vilain/Heros ----------------------------------------------------------------
+
+    const string traitVilainHero = "\n\033[93m══════════════════════════════════ Affichage du Vilian/Hero ═══════════════════════════════════════ ";
+    cout << traitVilainHero << endl;
+
+    if (!vecteurVilain.empty() && !vecteurHeros.empty()) 
+    {
+        Vilain vilain = vecteurVilain[2];
+        Heros heros = vecteurHeros[0];
+
+        VilainHeros vilainHeros(vilain, heros, vilain.getObjectif() + heros.getJeu());
+        cout << "\033[95m";  
+        vilainHeros.afficher(cout);
+        vecteurPersonnages.push_back(make_shared<VilainHeros>(vilainHeros));
+    }
+
+    // ---------------------------------------------------------------- Affichage du vecteur personnage a la fin ----------------------------------------------------------------
+
+    const string traitFinal = "\n\033[93m══════════════════════════════════ Affichage du vecteur Personnage après l'ajout du Vilain/Hero ═══════════════════════════════════════ ";
+    cout << traitFinal << endl;
+
+
+    for (const auto& personnage : vecteurPersonnages) 
+    {
+        if (dynamic_cast<Heros*>(personnage.get())) 
+        {
+            cout << "\033[94m";  
+        }
+
+        else if (dynamic_cast<Vilain*>(personnage.get())) 
+        {
+            cout << "\033[91m";  
+        }
+
+        else if (dynamic_cast<VilainHeros*>(personnage.get())) 
+        {
+            cout << "\033[95m";  
+        }
+        personnage->afficher(cout);
+        
+        cout << trait << endl;
+    }
+
     cout << "\033[0m";
 
     return 0;
