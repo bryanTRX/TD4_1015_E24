@@ -182,7 +182,7 @@ int main()
         cout << trait << endl;
     }
 
-    cout << "\33[0m";
+    cout << "\33[0m" << endl;
 
     return 0;
 }
