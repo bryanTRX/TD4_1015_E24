@@ -20,7 +20,7 @@ public:
     void afficher(ostream& os, Couleur couleur) const override
     {
         Personnage::afficher(os, couleur);
-        os << couleurToString(couleur) << "Ennemi : " << ennemi_ << "\nNombre d'alliés: " << getNombreAllies() << "\nAlliés :" << endl;
+        os << couleurToString(couleur) << "Ennemi : " << ennemi_ << "\nNombre d'alliés : " << getNombreAllies() << "\nAlliés :" << endl;
         for (const auto& allie : allies_) 
         {
             os << "\t" << allie << endl;

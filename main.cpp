@@ -1,4 +1,10 @@
-﻿#include "lectureBinaire.hpp"
+﻿// Programme contenant le projet du TD4.
+// file		main.cpp
+// author	Iliass Khider et Bryan Alexandre Tavares
+// date		27 mai 2024
+// Créé le	3 juin 2024
+
+#include "lectureBinaire.hpp"
 #include "VilainsHeros.hpp"
 #include <fstream>
 #include <sstream>
@@ -39,6 +45,7 @@ int main()
 
     const string trait = "\n\033[0m═════════════════════════════════════════════════════════════════════════";
 
+    // Ici on fait la lecture de notre fichier heros.bin et l'initialisation de notre vecteur Heros.
     vector<Heros> vecteurHeros;
     ifstream fichierHeros = ouvrirFichierBinaire("heros.bin");
     if (!fichierHeros)
@@ -47,6 +54,7 @@ int main()
         return 1;
     }
 
+    // Dans cette section on fait simplement remplir notre vecteur des heros qu'on a lu dans le fichier heros.bin.
     size_t nombreHeros = lireUintTailleVariable(fichierHeros);
     for (size_t i = 0; i < nombreHeros; ++i)
     {
@@ -64,6 +72,7 @@ int main()
         vecteurHeros.push_back(heros);
     }
 
+    // Ici on fait la lecture de notre fichier vilains.bin et l'initialisation de notre vecteur Vilain.
     vector<Vilain> vecteurVilain;
     ifstream fichierVilain = ouvrirFichierBinaire("vilains.bin");
     if (!fichierVilain)
@@ -72,6 +81,7 @@ int main()
         return 1;
     }
 
+    // Dans cette section on fait simplement remplir notre vecteur des vilains qu'on a lu dans le fichier vilains.bin.
     size_t nombreVilain = lireUintTailleVariable(fichierVilain);
     for (size_t i = 0; i < nombreVilain; ++i)
     {
@@ -88,6 +98,7 @@ int main()
     const string traitHeros = "\n\033[93m══════════════════════════════════ Affichage des Héros ═══════════════════════════════════════ ";
     cout << traitHeros << endl;
 
+    // Affichage des héros avec la couleur bleue.
     for (auto& heros : vecteurHeros)
     {
         heros.changerCouleur(Couleur::Bleu);
@@ -100,6 +111,7 @@ int main()
     const string traitVilain = "\n\033[93m══════════════════════════════════ Affichage des Vilains ═══════════════════════════════════════ ";
     cout << traitVilain << endl;
 
+    // Affichage des vilains avec la couleur rouge.
     for (auto& vilain : vecteurVilain)
     {
         vilain.changerCouleur(Couleur::Rouge);
@@ -109,9 +121,10 @@ int main()
 
     // ---------------------------------------------------------------- Personnages ----------------------------------------------------------------
 
-    const string traitPersonnage = "\n\033[93m══════════════════════════════════ Affichage des Personnages ═══════════════════════════════════════ ";
+    const string traitPersonnage = "\n\033[93m══════════════════════════════ Affichage des Personnages ═══════════════════════════════════ ";
     cout << traitPersonnage << endl;
 
+    // Fusion des héros et vilains dans un vecteur de personnages.
     vector<shared_ptr<Personnage>> vecteurPersonnages;
 
     for (const auto& heros : vecteurHeros)
@@ -124,13 +137,14 @@ int main()
         vecteurPersonnages.push_back(make_shared<Vilain>(vilain));
     }
 
+    // Affichage des personnages avec les couleurs correspondantes.
     for (auto& personnage : vecteurPersonnages)
     {
         if (dynamic_cast<Heros*>(personnage.get()))
         {
             personnage->changerCouleur(Couleur::Bleu);
         }
-
+        
         else if (dynamic_cast<Vilain*>(personnage.get()))
         {
             personnage->changerCouleur(Couleur::Rouge);
@@ -141,9 +155,10 @@ int main()
 
     // ---------------------------------------------------------------- Vilain/Heros ----------------------------------------------------------------
 
-    const string traitVilainHero = "\n\033[93m══════════════════════════════════ Affichage du Vilian/Hero ═══════════════════════════════════════ ";
+    const string traitVilainHero = "\n\033[93m══════════════════════════════ Affichage du Vilain/Hero ══════════════════════════════════ ";
     cout << traitVilainHero << endl;
 
+    // Création et affichage d'un personnage hybride Vilain/Héros si les vecteurs ne sont pas vides.
     if (!vecteurVilain.empty() && !vecteurHeros.empty())
     {
         Vilain vilain = vecteurVilain[2];
@@ -154,19 +169,21 @@ int main()
         vilainHeros.afficher(cout, Couleur::Mauve);
         vecteurPersonnages.push_back(make_shared<VilainHeros>(vilainHeros));
     }
+    cout << trait << endl;
 
-    // ---------------------------------------------------------------- Affichage du vecteur personnage a la fin ----------------------------------------------------------------
+    // ---------------------------------------------------------------- Affichage du vecteur personnage à la fin ----------------------------------------------------------------
 
-    const string traitFinal = "\n\033[93m══════════════════════════════════ Affichage du vecteur Personnage après l'ajout du Vilain/Hero ═══════════════════════════════════════ ";
+    const string traitFinal = "\n\033[93m══════════════════════════════ Affichage du vecteur Personnage après l'ajout du Vilain/Hero ═══════════════════════════════════ ";
     cout << traitFinal << endl;
 
+    // Affichage final des personnages après l'ajout du Vilain/Héros avec les couleurs correspondantes.
     for (auto& personnage : vecteurPersonnages)
     {
         if (dynamic_cast<VilainHeros*>(personnage.get()))
         {
             personnage->changerCouleur(Couleur::Mauve);
         }
-
+        
         else if (dynamic_cast<Heros*>(personnage.get()))
         {
             personnage->changerCouleur(Couleur::Bleu);

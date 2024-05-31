@@ -4,7 +4,7 @@
 
 using namespace std;
 
-enum class Couleur
+enum Couleur
 {
     Rouge,
     Bleu,

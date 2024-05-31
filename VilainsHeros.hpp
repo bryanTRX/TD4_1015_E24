@@ -6,7 +6,7 @@
 class VilainHeros : public Vilain, public Heros
 {
 public:
-    VilainHeros(const Vilain& vilain, const Heros& heros) : Personnage(vilain.getNom() + "-" + heros.getNom(), vilain.getJeu() + "-" + heros.getJeu()), Vilain(vilain), Heros(heros), mission_(vilain.getObjectif() + " dans le monde de " + heros.getJeu()) {}
+    VilainHeros(const Vilain& vilain, const Heros& heros) : Personnage(vilain.getNom() + " - " + heros.getNom(), vilain.getJeu() + " - " + heros.getJeu()), Vilain(vilain), Heros(heros), mission_(vilain.getObjectif() + " dans le monde de " + heros.getJeu()) {}
 
     const string& getMission() const { return mission_; }
 
