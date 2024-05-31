@@ -1,14 +1,20 @@
-//#include "Personnage.hpp"
-//
-//class Vilains : public virtual Personnage
-//{
-//public:
-//    Vilains(const string& nom, const string& jeu, const string& objectif);
-//
-//    const string& getObjectif() const;
-//
-//    void afficher(ostream& os) const override;
-//
-//private:
-//    string objectif_;
-//};
+#pragma once
+
+#include "Personnage.hpp"
+
+class Vilain : public virtual Personnage
+{
+public:
+    Vilain(const string& nom, const string& jeu, const string& objectif) : Personnage(nom, jeu), objectif_(objectif) {}
+
+    const string& getObjectif() const { return objectif_; }
+
+    void afficher(ostream& os, Couleur couleur) const override
+    {
+        Personnage::afficher(os, couleur);
+        os << couleurToString(couleur) << "Objectif : " << objectif_ << "\033[0m" << std::endl;
+    }
+
+private:
+    string objectif_;
+};

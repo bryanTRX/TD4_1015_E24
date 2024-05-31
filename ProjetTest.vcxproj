@@ -161,15 +161,11 @@
   <ItemGroup>
     <ClCompile Include="bibliotheque_cours\bibliotheque_cours.cpp" />
     <ClCompile Include="bibliotheque_cours\verification_allocation.cpp" />
-    <ClCompile Include="Heros.cpp" />
     <ClCompile Include="lectureBinaire.cpp">
       <SubType>
       </SubType>
     </ClCompile>
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="Personnage.cpp" />
-    <ClCompile Include="Vilains.cpp" />
-    <ClCompile Include="VilainsHeros.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="CMakeLists.txt" />
@@ -180,6 +176,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Affichable.hpp" />
+    <ClInclude Include="Couleur.hpp" />
     <ClInclude Include="Heros.hpp" />
     <ClInclude Include="lectureBinaire.hpp" />
     <ClInclude Include="Personnage.hpp" />
