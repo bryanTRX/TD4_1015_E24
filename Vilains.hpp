@@ -5,7 +5,11 @@
 class Vilain : public virtual Personnage
 {
 public:
+    // Constructeurs -----------------------------------------------------------------------------------------------------
+
     Vilain(const string& nom, const string& jeu, const string& objectif) : Personnage(nom, jeu), objectif_(objectif) {}
+
+    // Méthodes ----------------------------------------------------------------------------------------------------------
 
     const string& getObjectif() const { return objectif_; }
 

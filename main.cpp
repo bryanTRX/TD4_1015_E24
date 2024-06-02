@@ -58,11 +58,12 @@ int main()
     size_t nombreHeros = lireUintTailleVariable(fichierHeros);
     for (size_t i = 0; i < nombreHeros; ++i)
     {
-        string nom = lireString(fichierHeros);
-        string jeu = lireString(fichierHeros);
+        string nom    = lireString(fichierHeros);
+        string jeu    = lireString(fichierHeros);
         string ennemi = lireString(fichierHeros);
         Heros heros(nom, jeu, ennemi);
 
+        // Dans cette section on fait simplement la lecture du nombre d'alliés qu'un héros possède.
         size_t nombreAllies = lireUintTailleVariable(fichierHeros);
         for (size_t j = 0; j < nombreAllies; ++j)
         {
@@ -85,8 +86,8 @@ int main()
     size_t nombreVilain = lireUintTailleVariable(fichierVilain);
     for (size_t i = 0; i < nombreVilain; ++i)
     {
-        string nom = lireString(fichierVilain);
-        string jeu = lireString(fichierVilain);
+        string nom      = lireString(fichierVilain);
+        string jeu      = lireString(fichierVilain);
         string objectif = lireString(fichierVilain);
         Vilain vilain(nom, jeu, objectif);
 
@@ -95,33 +96,31 @@ int main()
 
     // ---------------------------------------------------------------- Héros ----------------------------------------------------------------
 
-    const string traitHeros = "\n\033[93m══════════════════════════════════ Affichage des Héros ═══════════════════════════════════════ ";
+    const string traitHeros = "\n\033[33m══════════════════════════════════ Affichage des Héros ═══════════════════════════════════════ ";
     cout << traitHeros << endl;
 
     // Affichage des héros avec la couleur bleue.
-    for (auto& heros : vecteurHeros)
+    for (const auto& heros : vecteurHeros)
     {
-        heros.changerCouleur(Couleur::Bleu);
         heros.afficher(cout, Couleur::Bleu);
         cout << trait << endl;
     }
 
     // ---------------------------------------------------------------- Vilain ----------------------------------------------------------------
 
-    const string traitVilain = "\n\033[93m══════════════════════════════════ Affichage des Vilains ═══════════════════════════════════════ ";
+    const string traitVilain = "\n\033[33m══════════════════════════════════ Affichage des Vilains ═══════════════════════════════════════ ";
     cout << traitVilain << endl;
 
     // Affichage des vilains avec la couleur rouge.
-    for (auto& vilain : vecteurVilain)
+    for (const auto& vilain : vecteurVilain)
     {
-        vilain.changerCouleur(Couleur::Rouge);
         vilain.afficher(cout, Couleur::Rouge);
         cout << trait << endl;
     }
 
     // ---------------------------------------------------------------- Personnages ----------------------------------------------------------------
 
-    const string traitPersonnage = "\n\033[93m══════════════════════════════ Affichage des Personnages ═══════════════════════════════════ ";
+    const string traitPersonnage = "\n\033[33m══════════════════════════════ Affichage des Personnages ═══════════════════════════════════ ";
     cout << traitPersonnage << endl;
 
     // Fusion des héros et vilains dans un vecteur de personnages.
@@ -138,7 +137,7 @@ int main()
     }
 
     // Affichage des personnages avec les couleurs correspondantes.
-    for (auto& personnage : vecteurPersonnages)
+    for (const auto& personnage : vecteurPersonnages)
     {
         if (dynamic_cast<Heros*>(personnage.get()))
         {
@@ -155,7 +154,7 @@ int main()
 
     // ---------------------------------------------------------------- Vilain/Heros ----------------------------------------------------------------
 
-    const string traitVilainHero = "\n\033[93m══════════════════════════════ Affichage du Vilain/Hero ══════════════════════════════════ ";
+    const string traitVilainHero = "\n\033[33m══════════════════════════════ Affichage du Vilain/Hero ══════════════════════════════════ ";
     cout << traitVilainHero << endl;
 
     // Création et affichage d'un personnage hybride Vilain/Héros si les vecteurs ne sont pas vides.
@@ -165,7 +164,6 @@ int main()
         Heros heros = vecteurHeros[0];
 
         VilainHeros vilainHeros(vilain, heros);
-        vilainHeros.changerCouleur(Couleur::Mauve);
         vilainHeros.afficher(cout, Couleur::Mauve);
         vecteurPersonnages.push_back(make_shared<VilainHeros>(vilainHeros));
     }
@@ -173,11 +171,11 @@ int main()
 
     // ---------------------------------------------------------------- Affichage du vecteur personnage à la fin ----------------------------------------------------------------
 
-    const string traitFinal = "\n\033[93m══════════════════════════════ Affichage du vecteur Personnage après l'ajout du Vilain/Hero ═══════════════════════════════════ ";
+    const string traitFinal = "\n\033[33m══════════════════════════════ Affichage du vecteur Personnage après l'ajout du Vilain/Hero ═══════════════════════════════════ ";
     cout << traitFinal << endl;
 
     // Affichage final des personnages après l'ajout du Vilain/Héros avec les couleurs correspondantes.
-    for (auto& personnage : vecteurPersonnages)
+    for (const auto& personnage : vecteurPersonnages)
     {
         if (dynamic_cast<VilainHeros*>(personnage.get()))
         {

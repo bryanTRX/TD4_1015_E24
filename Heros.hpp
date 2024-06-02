@@ -6,12 +6,11 @@
 class Heros : public virtual Personnage
 {
 public:
+    // Constructeurs -----------------------------------------------------------------------------------------------
+
     Heros(const string& nom, const string& jeu, const string& ennemi) : Personnage(nom, jeu), ennemi_(ennemi) {}
 
-    void ajouterAllier(const std::string& allie)
-    {
-        allies_.push_back(allie);
-    }
+    // Méthodes ----------------------------------------------------------------------------------------------------
 
     const string& getEnnemi() const { return ennemi_; }
     const vector<string>& getAllies() const { return allies_; }
@@ -26,6 +25,11 @@ public:
             os << "\t" << allie << endl;
         }
         os << "\033[0m";
+    }
+
+    void ajouterAllier(const string& allie)
+    {
+        allies_.push_back(allie);
     }
 
 private:

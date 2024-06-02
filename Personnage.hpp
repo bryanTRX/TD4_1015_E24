@@ -5,8 +5,12 @@
 class Personnage : public virtual Affichable
 {
 public:
+    // Constructeurs ------------------------------------------------------------------------------------------
+
     Personnage(const string& nom, const string& jeu) : nom_(nom), jeu_(jeu), couleur_(Couleur::Blanc) {}
     virtual ~Personnage() = default;
+
+    // Méthodes -----------------------------------------------------------------------------------------------
 
     const string& getNom() const { return nom_; }
     const string& getJeu() const { return jeu_; }
