@@ -22,3 +22,9 @@ public:
 private:
     string objectif_;
 };
+
+ostream& operator<<(ostream& os, const Vilain& vilain)
+{
+    vilain.afficher(os, Couleur::Rouge);
+    return os;
+}

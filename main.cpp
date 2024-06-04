@@ -102,8 +102,7 @@ int main()
     // Affichage des héros avec la couleur bleue.
     for (const auto& heros : vecteurHeros)
     {
-        heros.afficher(cout, Couleur::Bleu);
-        cout << trait << endl;
+        cout << heros << trait << endl;
     }
 
     // ---------------------------------------------------------------- Vilain ----------------------------------------------------------------
@@ -114,8 +113,7 @@ int main()
     // Affichage des vilains avec la couleur rouge.
     for (const auto& vilain : vecteurVilain)
     {
-        vilain.afficher(cout, Couleur::Rouge);
-        cout << trait << endl;
+        cout << vilain << trait << endl;
     }
 
     // ---------------------------------------------------------------- Personnages ----------------------------------------------------------------
@@ -148,8 +146,7 @@ int main()
         {
             personnage->changerCouleur(Couleur::Rouge);
         }
-        personnage->afficher(cout, personnage->getCouleur());
-        cout << trait << endl;
+        cout << *personnage << trait << endl;
     }
 
     // ---------------------------------------------------------------- Vilain/Heros ----------------------------------------------------------------
@@ -157,17 +154,16 @@ int main()
     const string traitVilainHero = "\n\033[33m══════════════════════════════ Affichage du Vilain/Hero ══════════════════════════════════ ";
     cout << traitVilainHero << endl;
 
-    // Création et affichage d'un personnage hybride Vilain/Héros si les vecteurs ne sont pas vides.
+    // Création et affichage d'un personnage hybride Vilain/Héros si les vecteurs ne sont pas vides et puis on ajout ce personnage dans le vecteur "vecteurPersonnages".
     if (!vecteurVilain.empty() && !vecteurHeros.empty())
     {
         Vilain vilain = vecteurVilain[2];
         Heros heros = vecteurHeros[0];
 
         VilainHeros vilainHeros(vilain, heros);
-        vilainHeros.afficher(cout, Couleur::Mauve);
+        cout << vilainHeros << trait << endl;
         vecteurPersonnages.push_back(make_shared<VilainHeros>(vilainHeros));
     }
-    cout << trait << endl;
 
     // ---------------------------------------------------------------- Affichage du vecteur personnage à la fin ----------------------------------------------------------------
 
@@ -191,8 +187,7 @@ int main()
         {
             personnage->changerCouleur(Couleur::Rouge);
         }
-        personnage->afficher(cout, personnage->getCouleur());
-        cout << trait << endl;
+        cout << *personnage << trait << endl;
     }
 
     cout << couleurToString(Couleur::Blanc) << endl;

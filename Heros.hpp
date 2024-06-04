@@ -36,3 +36,9 @@ private:
     string ennemi_;
     vector<string> allies_;
 };
+
+ostream& operator<<(ostream& os, const Heros& heros)
+{
+    heros.afficher(os, Couleur::Bleu);
+    return os;
+}

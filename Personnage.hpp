@@ -16,14 +16,20 @@ public:
     const string& getJeu() const { return jeu_; }
     const Couleur getCouleur() const { return couleur_; }
 
-    void afficher(ostream& os, Couleur couleur) const override
+    virtual void afficher(ostream& os, Couleur couleur) const override
     {
         os << couleurToString(couleur) << "Nom : " << nom_ << "\nParution : " << jeu_ << "\033[0m" << endl;
     }
 
-    void changerCouleur(Couleur couleur) override
+    virtual void changerCouleur(Couleur couleur) override
     {
         couleur_ = couleur;
+    }
+
+    friend ostream& operator<<(ostream& os, const Personnage& personnage)
+    {
+        personnage.afficher(os, personnage.getCouleur());
+        return os;
     }
 
 private:

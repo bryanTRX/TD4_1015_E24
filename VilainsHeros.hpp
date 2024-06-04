@@ -33,3 +33,9 @@ public:
 private:
     string mission_;
 };
+
+ostream& operator<<(ostream& os, const VilainHeros& vilainHero)
+{
+    vilainHero.afficher(os, Couleur::Mauve);
+    return os;
+}
